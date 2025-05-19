@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Quieres ser mi pareja?</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            max-width: 90%;
+        }
+        h1 {
+            color: #d63384;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        button {
+            padding: 12px 24px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        #yes {
+            background-color: #4CAF50;
+            color: white;
+        }
+        #no {
+            background-color: #f44336;
+            color: white;
+        }
+        button:hover {
+            transform: scale(1.05);
+        }
+        .hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .heart {
+            position: absolute;
+            color: #ff6b8b;
+            font-size: 20px;
+            animation: float 10s linear infinite;
+        }
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        #response {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #4CAF50;
+            display: none;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            button {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts" id="hearts"></div>
+    <div class="container">
+        <h1>¿Quieres ser mi pareja?</h1>
+        <div class="buttons">
+            <button id="yes">Sí</button>
+            <button id="no">No</button>
+        </div>
+        <div id="response">¡Sabía que dirías que sí!</div>
+    </div>
+
+    <script>
+        const yesButton = document.getElementById('yes');
+        const noButton = document.getElementById('no');
+        const heartsContainer = document.getElementById('hearts');
+        const responseDiv = document.getElementById('response');
+
+        // Create hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            heartsContainer.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 10000);
+        }
+
+        setInterval(createHeart, 300);
+
+        noButton.addEventListener('click', () => {
+            const yesSize = window.getComputedStyle(yesButton).fontSize;
+            const noSize = window.getComputedStyle(noButton).fontSize;
+
+            const newYesSize = parseFloat(yesSize) * 1.2;
+            const newNoSize = parseFloat(noSize) * 0.8;
+
+            yesButton.style.fontSize = `${newYesSize}px`;
+            noButton.style.fontSize = `${newNoSize}px`;
+
+            if (newNoSize < 5) {
+                noButton.style.display = 'none';
+            }
+        });
+
+        yesButton.addEventListener('click', () => {
+            responseDiv.style.display = 'block';
+        });
+    </script>
+</body>
+</html>
